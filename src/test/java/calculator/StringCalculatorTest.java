@@ -1,9 +1,12 @@
 package calculator;
 
+import com.sun.source.tree.AssertTree;
+import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 
 public class StringCalculatorTest {
@@ -25,12 +28,28 @@ public class StringCalculatorTest {
         Assertions.assertEquals(2, result, "2 should be 2");
     }
     @Test
-    void checkReturnNullNumbers(){
+    void checkReturnEmptyInput(){
         StringCalculator calc = new StringCalculator();
 
         var result = calc.Add("");
 
         Assertions.assertEquals(0,result);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"1,2", "1,2,3", "1,5,6,2"})
+    void checkReturnVariednumbers(String candidate){
+        StringCalculator calc = new StringCalculator();
+
+        var result = calc.Add(candidate);
+        switch (candidate){
+            case "1,2": Assertions.assertEquals(3, result);
+            break;
+            case "1,2,3": Assertions.assertEquals(6, result);
+            break;
+            case "1,5,6,2": Assertions.assertEquals(14, result);
+        }
+
     }
 
 }
