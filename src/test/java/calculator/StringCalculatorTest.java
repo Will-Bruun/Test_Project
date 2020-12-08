@@ -17,7 +17,7 @@ public class StringCalculatorTest {
 
         int result = 0;
         try {
-            result = calc.Add("1;2");
+            result = calc.Add("1;2;3;1001");
         } catch (NegativeArgumentException e) {
             e.printStackTrace();
         }
@@ -60,7 +60,7 @@ public class StringCalculatorTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"1\n2", "1,2,3", "1;5;6;2"})
+    @ValueSource(strings = {"1\n2", "1,2,3", "1;5;6;2", "1#2#3#1001"})
     void checkReturnVariednumbers(String candidate){
         StringCalculator calc = new StringCalculator();
 
@@ -75,8 +75,10 @@ public class StringCalculatorTest {
             break;
             case "1,2,3": Assertions.assertEquals(6, result);
             break;
-            case "1,5,6,2": Assertions.assertEquals(14, result);
+            case "1;5;6;2": Assertions.assertEquals(14, result);
             break;
+            case "2#2#3#1001": Assertions.assertEquals(7, result);
+
         }
 
     }
