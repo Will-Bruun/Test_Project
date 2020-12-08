@@ -1,10 +1,12 @@
 package calculator;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class StringCalculator {
     public int Add(String nums) {
         ArrayList<Integer> list = new ArrayList<Integer>();
+        nums = nums.replace("\n", ",");
         int sum = 0;
         if (nums == "") {
             return 0;

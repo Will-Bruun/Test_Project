@@ -15,7 +15,7 @@ public class StringCalculatorTest {
     void checkReturnTwoNumbers(){
         StringCalculator calc = new StringCalculator();
 
-        int result = calc.Add("1,2");
+        int result = calc.Add("1\n2");
 
         Assertions.assertEquals(3, result, "1 + 2 should be 3");
     }
@@ -37,7 +37,7 @@ public class StringCalculatorTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"1,2", "1,2,3", "1,5,6,2"})
+    @ValueSource(strings = {"1\n2", "1,2,3", "1,5,6,2"})
     void checkReturnVariednumbers(String candidate){
         StringCalculator calc = new StringCalculator();
 
@@ -48,6 +48,7 @@ public class StringCalculatorTest {
             case "1,2,3": Assertions.assertEquals(6, result);
             break;
             case "1,5,6,2": Assertions.assertEquals(14, result);
+            break;
         }
 
     }
