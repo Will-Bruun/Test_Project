@@ -15,7 +15,12 @@ public class StringCalculatorTest {
     void checkReturnTwoNumbers(){
         StringCalculator calc = new StringCalculator();
 
-        int result = calc.Add("1;2");
+        int result = 0;
+        try {
+            result = calc.Add("1;2");
+        } catch (NegativeArgumentException e) {
+            e.printStackTrace();
+        }
 
         Assertions.assertEquals(3, result, "1 + 2 should be 3");
     }
@@ -23,7 +28,12 @@ public class StringCalculatorTest {
     void checkReturnOneNumber(){
         StringCalculator calc = new StringCalculator();
 
-        int result = calc.Add("2");
+        int result = 0;
+        try {
+            result = calc.Add("2");
+        } catch (NegativeArgumentException e) {
+            e.printStackTrace();
+        }
 
         Assertions.assertEquals(2, result, "2 should be 2");
     }
@@ -31,9 +41,22 @@ public class StringCalculatorTest {
     void checkReturnEmptyInput(){
         StringCalculator calc = new StringCalculator();
 
-        var result = calc.Add("");
+        int result = 0;
+        try {
+            result = calc.Add("");
+        } catch (NegativeArgumentException e) {
+            e.printStackTrace();
+        }
 
         Assertions.assertEquals(0,result);
+    }
+
+    @Test
+    @DisplayName("Check if NegativeArgumentError gets thrown")
+    void checkErrorThrown(){
+        StringCalculator calc = new StringCalculator();
+
+        Assertions.assertThrows(NegativeArgumentException.class, () -> calc.Add("1,-3,-4"));
     }
 
     @ParameterizedTest
@@ -41,7 +64,12 @@ public class StringCalculatorTest {
     void checkReturnVariednumbers(String candidate){
         StringCalculator calc = new StringCalculator();
 
-        var result = calc.Add(candidate);
+        int result = 0;
+        try {
+            result = calc.Add(candidate);
+        } catch (NegativeArgumentException e) {
+            e.printStackTrace();
+        }
         switch (candidate){
             case "1,2": Assertions.assertEquals(3, result);
             break;
