@@ -1,17 +1,17 @@
 package calculator;
 
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class StringCalculator {
     public int Add(String nums) {
-        ArrayList<Integer> list = new ArrayList<Integer>();
-        nums = nums.replace("\n", ",");
-        int sum = 0;
-        if (nums == "") {
+        if (nums.equals("")) {
             return 0;
         }
-        String[] split = nums.split(",");
+        ArrayList<Integer> list = new ArrayList<>();
+        Pattern pattern = Pattern.compile(",|;|\n|#|&|%|\\*|\\\\\\\\|/|//");
+        int sum = 0;
+        String[] split = pattern.split(nums);
         for (String num : split) {
             list.add(Integer.parseInt(num));
         }
