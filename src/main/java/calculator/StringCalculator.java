@@ -25,9 +25,12 @@ public class StringCalculator{
         if(negatives.size() > 0){
             throw new NegativeArgumentException("One or several numbers were negative. These numbers were invalid:" + negatives);
         }
+
         for(int i = 0; i < list.size(); i++){
             int temp = sum;
-            sum = temp + list.get(i);
+            if(list.get(i) < 1000){
+                sum = temp + list.get(i);
+            }
         }
         return sum;
     }
