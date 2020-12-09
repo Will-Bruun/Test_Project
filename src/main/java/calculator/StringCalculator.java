@@ -1,18 +1,25 @@
 package calculator;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class StringCalculator{
-    public int Add(String nums) throws NegativeArgumentException {
+
+    Converter con = new Converter();
+    ArrayList<Integer> list = new ArrayList<>();
+    ArrayList<Integer> negatives = new ArrayList<>();
+    Pattern pattern = Pattern.compile(",|;|\n|#|&|%|\\*|\\\\\\\\|/|//");
+
+    public int Add(String nums){
         if (nums.equals("")) {
             return 0;
         }
-        ArrayList<Integer> list = new ArrayList<>();
-        ArrayList<Integer> negatives = new ArrayList<>();
-        Pattern pattern = Pattern.compile(",|;|\n|#|&|%|\\*|\\\\\\\\|/|//");
-        int sum = 0;
-        String[] split = pattern.split(nums);
+        List<String> split = con.arrayToList(pattern, nums);
+        return summarize(split);
+    }
+
+    public void parseStringToInt(List<String> split) throws NegativeArgumentException {
         for(String num : split) {
             int temp = Integer.parseInt(num);
             if(temp < 0){
@@ -25,12 +32,20 @@ public class StringCalculator{
         if(negatives.size() > 0){
             throw new NegativeArgumentException("One or several numbers were negative. These numbers were invalid:" + negatives);
         }
+    }
 
-        for(int i = 0; i < list.size(); i++){
-            int temp = sum;
-            if(list.get(i) < 1000){
-                sum = temp + list.get(i);
+    public int summarize(List<String> split){
+        int sum = 0;
+        try {
+            parseStringToInt(split);
+            for (Integer integer : list) {
+                int temp = sum;
+                if (integer < 1000) {
+                    sum = temp + integer;
+                }
             }
+        } catch (NegativeArgumentException e) {
+            e.printStackTrace();
         }
         return sum;
     }
