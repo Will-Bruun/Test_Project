@@ -17,12 +17,10 @@ public class StringCalculatorTest {
     @Test
     @DisplayName("Simple test to see if a couple of parameters return right value")
     void checkReturnTwoNumbers(){
-
-
         var result = 0;
-        result = calc.Add("1;2#3");
+        result = calc.Add("1;2");
 
-        Assertions.assertEquals(6, result, "1 + 2 + 3 should be 6");
+        Assertions.assertEquals(3, result, "1 + 2 should be 3");
     }
     @Test
     void checkReturnOneNumber(){
@@ -43,12 +41,18 @@ public class StringCalculatorTest {
 
     @Test
     @DisplayName("Check if NegativeArgumentError gets thrown")
-    void checkErrorThrown(){
+    void checkNegativeErrorThrown(){
         List<String> error = new ArrayList<>();
         error.add("-4");
         error.add("-1");
         error.add("5");
         Assertions.assertThrows(NegativeArgumentException.class, () -> calc.parseStringToInt(error));
+    }
+
+    @Test
+    @DisplayName("Check if IllegalArgumentError gets thrown")
+    void checkIllegalErrorThrown(){
+        Assertions.assertThrows(IllegalArgumentException.class, () -> calc.Add("1;2;a"));
     }
 
     @Test
