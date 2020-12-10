@@ -1,14 +1,15 @@
 package calculator;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class StringCalculatorTest {
 
@@ -20,7 +21,7 @@ public class StringCalculatorTest {
         var result = 0;
         result = calc.Add("1;2");
 
-        Assertions.assertEquals(3, result, "1 + 2 should be 3");
+        assertThat(result).isEqualTo(3);
     }
     @Test
     void checkReturnOneNumber(){
@@ -28,7 +29,7 @@ public class StringCalculatorTest {
         var result = 0;
         result = calc.Add("2");
 
-        Assertions.assertEquals(2, result, "2 should be 2");
+        assertThat(result).isEqualTo(2);
     }
     @Test
     void checkReturnEmptyInput(){
@@ -36,7 +37,7 @@ public class StringCalculatorTest {
         var result = 0;
         result = calc.Add("");
 
-        Assertions.assertEquals(0,result);
+        assertThat(result).isEqualTo(0);
     }
 
     @Test
@@ -46,13 +47,14 @@ public class StringCalculatorTest {
         error.add("-4");
         error.add("-1");
         error.add("5");
-        Assertions.assertThrows(NegativeArgumentException.class, () -> calc.parseStringToInt(error));
+
+        assertThatThrownBy(() -> calc.parseStringToInt(error)).isInstanceOf(NegativeArgumentException.class).hasMessageContaining("invalid: [%s, %s]", "-4", "-1");
     }
 
     @Test
-    @DisplayName("Check if IllegalArgumentError gets thrown")
+    @DisplayName("Check if IllegalArgumentException gets thrown")
     void checkIllegalErrorThrown(){
-        Assertions.assertThrows(IllegalArgumentException.class, () -> calc.Add("1;2;a"));
+        assertThatThrownBy(() -> calc.Add("1;2;a")).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -62,7 +64,7 @@ public class StringCalculatorTest {
         var result = 0;
         result = calc.Add("1;;2#######3");
 
-        Assertions.assertEquals(6, result, "1 + 2 + 3 should be 6");
+        assertThat(result).isEqualTo(6);
     }
 
     @ParameterizedTest
@@ -72,11 +74,11 @@ public class StringCalculatorTest {
         var result = 0;
         result = calc.Add(candidate);
         switch (candidate) {
-            case "1,2" -> Assertions.assertEquals(3, result);
-            case "1,2,3" -> Assertions.assertEquals(6, result);
-            case "1;5;6;2" -> Assertions.assertEquals(14, result);
-            case "2#2#3#1001" -> Assertions.assertEquals(7, result);
-            case "4###2" -> Assertions.assertEquals(4, result);
+            case "1,2" -> assertThat(result).isEqualTo(3);
+            case "1,2,3" -> assertThat(result).isEqualTo(6);
+            case "1;5;6;2" -> assertThat(result).isEqualTo(14);
+            case "2#2#3#1001" -> assertThat(result).isEqualTo(7);
+            case "4###2" -> assertThat(result).isEqualTo(4);
         }
 
     }

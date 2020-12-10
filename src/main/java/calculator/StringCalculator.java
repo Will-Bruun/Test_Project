@@ -9,7 +9,7 @@ public class StringCalculator{
     Converter con = new Converter();
     ArrayList<Integer> list = new ArrayList<>();
     ArrayList<Integer> negatives = new ArrayList<>();
-    Pattern pattern = Pattern.compile(",|;|\n|#|&|%|\\*|\\\\\\\\|/|//");
+    Pattern pattern = Pattern.compile(",|;|\n|#|&|%|\\*|\\\\\\\\|/|//|\\?|-");
 
     public int Add(String nums) throws IllegalArgumentException{
         if(nums.equals("")) {
@@ -33,7 +33,7 @@ public class StringCalculator{
             }
         }
         if(negatives.size() > 0){
-            throw new NegativeArgumentException("One or several numbers were negative. These numbers were invalid:" + negatives);
+            throw new NegativeArgumentException("One or several numbers were negative. These numbers were invalid: " + negatives);
         }
     }
 
