@@ -11,9 +11,12 @@ public class StringCalculator{
     ArrayList<Integer> negatives = new ArrayList<>();
     Pattern pattern = Pattern.compile(",|;|\n|#|&|%|\\*|\\\\\\\\|/|//");
 
-    public int Add(String nums){
-        if (nums.equals("")) {
+    public int Add(String nums) throws IllegalArgumentException{
+        if(nums.equals("")) {
             return 0;
+        }
+        else if(nums.matches("A-Z|a-z")){
+            throw new IllegalArgumentException("String contains letters instead of numbers and delimiters");
         }
         List<String> split = con.arrayToList(pattern, nums);
         return summarize(split);
